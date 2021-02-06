@@ -33,11 +33,18 @@
     display:grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
-    width: 800px;
+    width: 600px;
     margin: 0 auto;
+    grid-gap: 10px;
+    background-color: black;
 }
 
 .cell{
+    display: flex;
     background-color: orange;
-    height:50px;
+    height:200px;
+    justify-content: center;
+    align-items: center;
+    font-size: 1000%;
+
 }

@@ -50,7 +50,7 @@ let gameboard  = (function (){
             };
         };
 
-        if((gameboard[0][0]==gameboard[1][1]&&gameboard[1][1]==gameboard[2][2]&&gameboard[1][1]!='')||(gameboard[0][2]==gameboard[1][1]&&gameboard[1][1]==gameboard[2][0]&&gameboard[1][1]!='')){
+        if((gameboard[0][0]==gameboard[1][1]&&gameboard[1][1]==gameboard[2][2]&&gameboard[0][0]!=''&&gameboard[1][1]!=''&&gameboard[2][2]!='')||(gameboard[0][2]==gameboard[1][1]&&gameboard[1][1]==gameboard[2][0]&&gameboard[2][0]!=''&&gameboard[1][1]!=''&&gameboard[0][2]!='')){
             ans = gameboard[1][1];
         }
         return ans
