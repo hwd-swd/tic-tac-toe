@@ -31,7 +31,7 @@ let gameboard  = (function (){
         }
     };
 
-    let gameOver = function(){
+    let gameOver = function(){  //function that checks if there is a tie game
         if(piecesPlayed()==9){
             return true
         }
@@ -46,14 +46,14 @@ let gameboard  = (function (){
             ans = false;
         }
         gameboard.forEach(row=>  //check each row for a win
-            {if(row.every(ele=>ele==row[0]&&ele!='')){
+            {if(row.every(ele=>ele==row[0]&&ele!='')&&row.length==3){
                 ans = row[0];
             }}
             );
         
         for (i=0;i<3;i++){  //check each column
             let column = [...gameboard[0][i],gameboard[1][i],gameboard[2][i]];
-            if(column.every(ele=>ele==column[0]&&ele!='')){
+            if(column.every(ele=>ele==column[0]&&ele!='')&&column.length==3){
                 ans = column[0];
             };
         };
@@ -71,11 +71,15 @@ let gameboard  = (function (){
 })();
 
 let displayController = (function(){
-    let board = gameboard.getBoard();
     let grid = document.querySelector('#grid');
 
+    let intializeGame = function(){
+        intializeBoard();
+    }
+    
+
     let intializeBoard = function(){ //function that updates the display to match the game board
-        clearBoard();
+        grid.innerHTML = '';
         for (i=0;i<3;i++){
             for(j=0;j<3;j++){
                 let temp = document.createElement('div');
@@ -96,17 +100,13 @@ let displayController = (function(){
         cells.forEach(cell=>cell.addEventListener('click',userClick));
     };
 
-
-    let clearBoard = function(){
-        grid.innerHTML = '';
-    };
-
     let userClick = function(e){  //function that adds a piece when a user clicks
         let [x,comma,y] = e.target.getAttribute('data-key');
-        gameboard.playPiece(x,y);
-        console.table(gameboard.getBoard());
-        displayController.intializeBoard();
-        userWon();
+        if(gameboard.wonGame()==''&&gameboard.getBoard()[x][y]==''){
+            gameboard.playPiece(x,y);
+            console.table(gameboard.getBoard()); //display boardstae
+            intializeBoard();
+            userWon();}
     };
 
     let userWon = function(){
@@ -122,20 +122,27 @@ let displayController = (function(){
         };
     };
 
+    let newGame = function(){ //new game button
+        gameboard.clearBoard()
+        intializeBoard()
+    }
+    let restartButton = document.querySelector('#restart');
+    restartButton.addEventListener('click',newGame);
+
     return {
-        intializeBoard
+        intializeGame
     }
 })();
 
 
 // //test code for player factory function
-let bob = createPlayer("bob");
-let bill = createPlayer("bill");
-console.log(bob.getScore());
-console.log(bob.getUserName());
-bill.increaseScore();
-console.log(bill.getScore());
-console.log(bill.getUserName());
+let player1 = createPlayer("player1");
+let player2 = createPlayer("player2");
+console.log(player1.getScore());
+console.log(player1.getUserName());
+player2.increaseScore();
+console.log(player2.getScore());
+console.log(player2.getUserName());
 
 // gameboard.playPiece(0,0)
 // gameboard.playPiece(1,2)
@@ -143,8 +150,7 @@ console.log(bill.getUserName());
 // gameboard.playPiece(2,2)
 // gameboard.playPiece(0,2)
 
-console.log(gameboard.wonGame())
-console.log(gameboard.getBoard())
+
 
 //main code
-displayController.intializeBoard()
+displayController.intializeGame()
