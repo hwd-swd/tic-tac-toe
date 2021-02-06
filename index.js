@@ -16,6 +16,8 @@ let gameboard  = (function (){
 
     let getBoard = function(){return gameboard}; //returns the board
 
+    let clearBoard = function(){gameboard=[['','',''],['','',''],['','','']];};
+
     let piecesPlayed = function(){  //returns the pieces placed
         let count = 0;
         gameboard.forEach(row=>row.forEach(ele=>ele!=''?count++:''));
@@ -24,26 +26,32 @@ let gameboard  = (function (){
 
     let playPiece = function(x,y){  //plays a piece on the board if it is a valid move
         let piece = piecesPlayed()%2==0 ? 'X' : 'O';
-        if (x<0||x>2||y<0||y>2){  
-            return false
-        }
-        else if (gameboard[x][y]==''){  //places a piece
+        if (gameboard[x][y]==''){  //places a piece
             gameboard[x][y]=piece;
+        }
+    };
+
+    let gameOver = function(){
+        if(piecesPlayed()==9){
+            return true
         }
         else{
             return false
         }
-    };
+    }
 
-    let wonGame = function(){
-        let ans = false;
+    let wonGame = function(){  //function that returns the piece if there is a winner, else returns false for a lost game or '' for no progress
+        let ans = '';
+        if(gameOver()){  //first checks if game is over
+            ans = false;
+        }
         gameboard.forEach(row=>  //check each row for a win
             {if(row.every(ele=>ele==row[0]&&ele!='')){
                 ans = row[0];
             }}
             );
         
-        for (i=0;i<3;i++){
+        for (i=0;i<3;i++){  //check each column
             let column = [...gameboard[0][i],gameboard[1][i],gameboard[2][i]];
             if(column.every(ele=>ele==column[0]&&ele!='')){
                 ans = column[0];
@@ -51,13 +59,14 @@ let gameboard  = (function (){
         };
 
         if((gameboard[0][0]==gameboard[1][1]&&gameboard[1][1]==gameboard[2][2]&&gameboard[0][0]!=''&&gameboard[1][1]!=''&&gameboard[2][2]!='')||(gameboard[0][2]==gameboard[1][1]&&gameboard[1][1]==gameboard[2][0]&&gameboard[2][0]!=''&&gameboard[1][1]!=''&&gameboard[0][2]!='')){
-            ans = gameboard[1][1];
+            ans = gameboard[1][1];  //check diagonal
         }
+        
         return ans
     };
 
     return {
-        getBoard,playPiece,wonGame
+        getBoard,playPiece,wonGame,clearBoard
     }
 })();
 
@@ -101,11 +110,16 @@ let displayController = (function(){
     };
 
     let userWon = function(){
-        if(gameboard.wonGame()!=false){
-            console.log(gameboard.wonGame())
-            console.log(gameboard.getBoard())
-            alert('won')
-        }
+        switch (gameboard.wonGame()){
+            case 'X':
+                alert('x won');
+                break;
+            case 'O':
+                alert('o won');
+                break;
+            case false:
+                alert('tie game')
+        };
     };
 
     return {
