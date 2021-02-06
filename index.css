@@ -64,10 +64,13 @@ html{
     width: 100%;
     color:var(--darkbrown);
     text-shadow: 4px 4px var(--lightbrown);
+    justify-content: center;
 }
 
-.beans{
-    background: ;
+.icon{
+    font-size:1000%;
+    text-shadow: 10px 10px var(--lightbrown);
+    color:var(--darkbrown);
 }
 
 .center{
@@ -121,14 +124,23 @@ html{
     height:200px;
     justify-content: center;
     align-items: center;
-    font-size: 1200%;
-    user-select: none;
-    font-weight: bold;
-    font-family: Adequate Extra;
-    color:var(--lightbrown)
+    
+}
+.cell:hover{
+    background-color: var(--lightbrown);
+    color:var(--darkbrown)
 }
 
 
+.cellItem{
+    font-size: 1000%;
+    user-select: none;
+    color:var(--lightbrown)
+}
+
+.cellItem:hover{
+    color:var(--darkbrown)
+}
 
 @media screen and (max-width: 1000px) ,(max-height:800px) {
     #grid {
@@ -136,8 +148,6 @@ html{
     }
     .cell{
         height:150px;
-        font-size: 900%;
-        font-weight: bold;
     }
     #mainContainer h1{
         font-size:400%;
@@ -149,6 +159,9 @@ html{
     
     #scoreboard h3{
         font-size: 100%;
+    }
+    .cellItem{
+        font-size: 800%;
     }
 }
 
@@ -180,10 +193,7 @@ html{
     }
 }
 
-.cell:hover{
-    background-color: var(--lightbrown);
-    color:var(--darkbrown)
-}
+
 
 .active{
     animation-name: color;

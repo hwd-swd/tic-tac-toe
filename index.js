@@ -94,7 +94,14 @@ let displayController = (function(){
                 temp.setAttribute('data-key',[i,j])
                 temp.classList.add("cell");
                 if (gameboard.getBoard()[i][j]!=""){
-                    temp.innerHTML=gameboard.getBoard()[i][j];
+                    switch(gameboard.getBoard()[i][j]){
+                        case 'X':
+                            temp.innerHTML=`<i  class="fas fa-mug-hot cellItem"></i>`;
+                            break;
+                        case 'O':
+                            temp.innerHTML=`<i  class="fas fa-cheese cellItem"></i>`;
+                    }
+                    // temp.innerHTML=gameboard.getBoard()[i][j];
                 }
                 else{
                     temp.innerHTML = "";
