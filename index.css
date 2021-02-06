@@ -1,32 +1,108 @@
+@font-face{
+    font-family: Adequate Extra;
+    src: url(adequate.ttf) format("truetype");
+}
+
+@font-face{
+    font-family: Dafoe;
+    src: url(mrdafoe.ttf) format("truetype")
+}
+
 * { 
     margin:0;
     border:0;
     font-size:100%;
     outline: 0;
     padding:0;
-    color:var(--black);
-    font-family:  fantasy;
+    color:black;
+    font-family: Dafoe;
+    
+}
+
+
+:root{
+    --lightbrown: #d2b690;
+    --darkbrown: #2e2828;
+    --gray: #b9b9af;
+    --white:#e5e5e5;
+}
+html{
+    background-color: var(--white);
 }
 
 #mainContainer{
     display:flex;
     flex-direction: column;
     align-items: center;
+    height:100vh;
+    width:100vw;
+    
 }
 
 #mainContainer h1{
-    font-size: 500%;
+    font-family: Dafoe;
+    font-size: 550%;
+    font-weight: bold;
+    text-shadow: 4px 4px var(--lightbrown);
+    color:var(--darkbrown)
+    
 }
 
 #scoreboard{
-    width:50%;
+    width:100%;
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+}
+
+.player1, .player2{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    height:100vh;
+    width: 100%;
+    color:var(--darkbrown);
+    text-shadow: 4px 4px var(--lightbrown);
+}
+
+.beans{
+    background: ;
+}
+
+.center{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 2rem;
 }
 
 #scoreboard h2{
     font-size: 300%;
+}
+
+#scoreboard h3{
+    font-size: 200%;
+}
+
+#restart{
+    background-color: var(--darkbrown);
+    color:var(--lightbrown);
+    font-size: 200%;
+    border: 1px solid black;
+    margin: 1rem auto;
+    padding: 0rem 1.5rem;
+    border-radius: 10px;
+}
+
+#restart:hover{
+    background-color: var(--lightbrown);
+    box-shadow: 0px 0px 8px 2px var(--darkbrown) ;
+    color: var(--white);
+}
+
+#restart:active{
+    background-color: var(--darkbrown);
 }
 
 #grid{
@@ -41,10 +117,83 @@
 
 .cell{
     display: flex;
-    background-color: orange;
+    background-color: var(--darkbrown);
     height:200px;
     justify-content: center;
     align-items: center;
-    font-size: 1000%;
+    font-size: 1200%;
     user-select: none;
+    font-weight: bold;
+    font-family: Adequate Extra;
+    color:var(--lightbrown)
+}
+
+
+
+@media screen and (max-width: 1000px) ,(max-height:800px) {
+    #grid {
+        width: 450px;
+    }
+    .cell{
+        height:150px;
+        font-size: 900%;
+        font-weight: bold;
+    }
+    #mainContainer h1{
+        font-size:400%;
+    }
+
+    #scoreboard h2{
+        font-size: 150%;
+    }
+    
+    #scoreboard h3{
+        font-size: 100%;
+    }
+}
+
+@media screen and (max-width: 700px),(max-height:700px) {
+    #scoreboard{
+        flex-direction: column;
+    }
+
+    #restart{
+        font-size:150%;
+    }
+
+    #scoreboard{
+        height:100vh;
+    }
+
+    #scoreboard h2{
+        font-size: 250%;
+    }
+    
+    #scoreboard h3{
+        font-size: 200%;
+    }
+
+    .player1,.player2{
+        height:100%;
+        order:2;
+        padding-top:0;
+    }
+}
+
+.cell:hover{
+    background-color: var(--lightbrown);
+    color:var(--darkbrown)
+}
+
+.active{
+    animation-name: color;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
+}
+
+@keyframes color {
+    100% {
+        background-color:var(--lightbrown);
+    }
 }

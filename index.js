@@ -1,13 +1,13 @@
 //factory function for players
 
-function createPlayer(userName){
+const createPlayer = function(userName){
     let score=0;
     return {
-        userName: userName,
-        score :score,
-        getUserName(){return userName},
-        getScore(){return score},
-        increaseScore(){score++}
+        userName,
+        score,
+        getUserName(){return this.userName},
+        getScore(){return this.score},
+        increaseScore(){this.score++}
     }
 }
 
@@ -72,10 +72,17 @@ let gameboard  = (function (){
 
 let displayController = (function(){
     let grid = document.querySelector('#grid');
+    let score1 = document.querySelector('#player1');
+    let score2 = document.querySelector('#player2');
+    let player1 = new createPlayer("player1");
+    let player2 = new createPlayer("player2");
+    let player1Container = document.querySelector('.player1');
+    let player2Container = document.querySelector('.player2');
 
     let intializeGame = function(){
+        player1Container.classList.toggle('active');
         intializeBoard();
-    }
+    };
     
 
     let intializeBoard = function(){ //function that updates the display to match the game board
@@ -93,8 +100,8 @@ let displayController = (function(){
                     temp.innerHTML = "";
                 }
                 grid.appendChild(temp);
-            }
-        }
+            };
+        };
 
         let cells = document.querySelectorAll('.cell');
         cells.forEach(cell=>cell.addEventListener('click',userClick));
@@ -103,8 +110,9 @@ let displayController = (function(){
     let userClick = function(e){  //function that adds a piece when a user clicks
         let [x,comma,y] = e.target.getAttribute('data-key');
         if(gameboard.wonGame()==''&&gameboard.getBoard()[x][y]==''){
+            player1Container.classList.toggle('active');
+            player2Container.classList.toggle('active');
             gameboard.playPiece(x,y);
-            console.table(gameboard.getBoard()); //display boardstae
             intializeBoard();
             userWon();}
     };
@@ -112,9 +120,13 @@ let displayController = (function(){
     let userWon = function(){
         switch (gameboard.wonGame()){
             case 'X':
+                player1.increaseScore();
+                score1.innerHTML=`Score: ${player1.getScore()}`;
                 alert('x won');
                 break;
             case 'O':
+                player2.increaseScore();
+                score2.innerHTML=`Score: ${player2.getScore()}`;
                 alert('o won');
                 break;
             case false:
@@ -123,8 +135,10 @@ let displayController = (function(){
     };
 
     let newGame = function(){ //new game button
-        gameboard.clearBoard()
-        intializeBoard()
+        player1Container.classList.add('active');
+        player2Container.classList.remove('active');
+        gameboard.clearBoard();
+        intializeBoard();
     }
     let restartButton = document.querySelector('#restart');
     restartButton.addEventListener('click',newGame);
@@ -136,13 +150,8 @@ let displayController = (function(){
 
 
 // //test code for player factory function
-let player1 = createPlayer("player1");
-let player2 = createPlayer("player2");
-console.log(player1.getScore());
-console.log(player1.getUserName());
-player2.increaseScore();
-console.log(player2.getScore());
-console.log(player2.getUserName());
+
+
 
 // gameboard.playPiece(0,0)
 // gameboard.playPiece(1,2)
