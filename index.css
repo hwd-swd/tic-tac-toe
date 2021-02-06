@@ -1,9 +1,4 @@
 @font-face{
-    font-family: Adequate Extra;
-    src: url(adequate.ttf) format("truetype");
-}
-
-@font-face{
     font-family: Dafoe;
     src: url(mrdafoe.ttf) format("truetype")
 }
