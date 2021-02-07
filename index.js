@@ -78,6 +78,9 @@ let displayController = (function(){
     let player2 = new createPlayer("player2");
     let player1Container = document.querySelector('.player1');
     let player2Container = document.querySelector('.player2');
+    let overlay = document.querySelector('#overlay');
+    let overlayButton = document.querySelector('#overlayButton');
+    let text = document.querySelector('#text');
 
     let intializeGame = function(){
         player1Container.classList.toggle('active');
@@ -101,7 +104,6 @@ let displayController = (function(){
                         case 'O':
                             temp.innerHTML=`<i  class="fas fa-cheese cellItem"></i>`;
                     }
-                    // temp.innerHTML=gameboard.getBoard()[i][j];
                 }
                 else{
                     temp.innerHTML = "";
@@ -129,16 +131,25 @@ let displayController = (function(){
             case 'X':
                 player1.increaseScore();
                 score1.innerHTML=`Score: ${player1.getScore()}`;
-                alert('x won');
+                text.innerHTML="Player 1 won!";
+                overlay.style.display = 'block';
+
                 break;
             case 'O':
                 player2.increaseScore();
                 score2.innerHTML=`Score: ${player2.getScore()}`;
-                alert('o won');
+                text.innerHTML="Player 2 won!";
+                overlay.style.display = 'block';
                 break;
             case false:
-                alert('tie game')
+                text.innerHTML="Tie game";
+                overlay.style.display = 'block';
+                break;
+            case '':
+                
         };
+        
+
     };
 
     let newGame = function(){ //new game button
@@ -147,6 +158,13 @@ let displayController = (function(){
         gameboard.clearBoard();
         intializeBoard();
     }
+
+    let restartGame = function(){
+        overlay.style.display = 'none';
+        newGame()
+    }
+    overlayButton.addEventListener('click',restartGame)
+
     let restartButton = document.querySelector('#restart');
     restartButton.addEventListener('click',newGame);
 
